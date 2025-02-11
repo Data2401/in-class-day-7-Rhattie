@@ -19,6 +19,25 @@ knitr::opts_chunk$set(echo = TRUE)
 3. Add 1 to each element in `n` and print the result
 4. Create a vector `m` that contains the numbers 10 to 1 (in that order), in two different ways, neither of which is just typing "10, 9 , 8 ...".  Hint: use one of the helper functions we learned.
 5. Subtract `m` FROM `n`. Note the recycling!
+```{r}
+n <- 10:49
+print(n)
+
+length_n <- length(n)
+print(length_n)
+
+n_plus_one <- n + 1
+print(n_plus_one)
+
+m1 <- seq(10, 1)
+print(m1)
+
+result <- n - m1 
+print(result)
+
+
+
+```
 
 ### Set 2 
 
@@ -26,9 +45,13 @@ knitr::opts_chunk$set(echo = TRUE)
 2. Create a vector `sin_wave` by calling the `sin()` function on each element in `x_range`.
 3. Use the `plot()` function to plot your "wave"!
      + the x vector goes in the first argument, the y vector goes in the second argument
-     + You'll need to add the argument `type = "l"` for a line. NOTE: That is a lower case "L", not a 1. 
+     + You'll need to add the argument `type = "l"` for a line. NOTE: That is a lower case "L", not a
+``` {r}
+x_range <- seq(-5,10,by =0.1)
+sin_wave<- sin(x_range)
+plot(x_range, sin_wave, type = "l",col = "red")
 
-
+```
 ### Set 3 
 
 1. Use `:` to make a vector of the integers from 40 to 50 called `first_nums`
@@ -38,13 +61,47 @@ knitr::opts_chunk$set(echo = TRUE)
 5. Use indexing to access the 5th to the 8th numbers in your combined vector
 6. Use indexing to create a new vector that contains the first 3 elements and last 3 elements of your combined vector. 
 7. Bonus/extra: do the above in a way that would work no matter how long the vector is (as long as it's longer than 2 elements)
+``` {r}
+first_nums<- 40:50
+plot(first_nums)
 
+next_nums<- 51:60
+plot(next_nums)
+
+together<- c(first_nums, next_nums)
+plot(together)
+
+this_is_the_7th_num<- together [7]
+this_is_the_7th_num
+
+this_is_the_5th_and_8th_num <-together [5:8]
+this_is_the_5th_and_8th_num
+
+last <-length(together)
+last
+
+new_vector <- c(together[1:3], together[(length(together)-2):length(together)])
+print(new_vector)
+
+
+if(length(together) > 2) {
+  new_vector_1 <- c(together[1:3], together[(length(together)-2):length(together)])
+} else {
+  new_vector_1 <- together
+}
+print(new_vector_1)
+
+```
 ## In Class Activity
 
 1. Write a function to simulate rolling a 6-sided die and returns the result.
 
 ```{r}
-
+dice_roll<-function() {
+  result<-sample(1:6, 1)
+  return(result)
+}
+dice_roll()
 ```
 
 
@@ -52,6 +109,21 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Write a function to simulate rolling 2 6-sided dice that returns the sum of the rolls. 
 
 ```{r}
+dice_roll_1<-function() {
+  result_1<-sample(1:6, 1)
+  return(result_1)
+}
+
+
+dice_roll_2<-function() {
+  result_2<-sample(1:6, 1)
+  return(result_2)
+}
+
+
+sum_of_2_rolls = dice_roll_1() + dice_roll_2()
+sum_of_2_rolls
+
 
 
 ```
@@ -61,6 +133,36 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 # Your one-roll function goes here
+dice_roll<-function() {
+  result<-sample(1:6, 1)
+  return(result)
+}
+dice_roll()
+
+roll_dice_for_names <- function(John_n, Adam_G){ 
+  roll1 <- dice_roll()
+  roll2 <- dice_roll()
+  
+if (roll1 == roll2) {
+    
+    roll1 <- dice_roll()
+    roll2 <- dice_roll()
+    if (roll1 == roll2) {
+      return("draw")
+    }
+  }
+if(roll1> roll2){
+  return(John_n)
+} else{
+  return(Adam_G)
+}
+  
+}
+roll_dice_for_names("john", "adam")
+  
+  
+
+
 
 ```
 
@@ -68,6 +170,20 @@ knitr::opts_chunk$set(echo = TRUE)
 2. Write a second function (you may start by modifying the first one) that takes two names as strings, simulates both of them rolling die 15 times, and returns the name of the person who "won" more rolls. Don't reroll ties this time, but don't count them as "wins". 
 
 ```{r}
+game_15vs <- function(player1,player2){
+  
+  roll1 <- sample(1:6,15,replace=T)
+  roll2 <- sample(1:6,15,replace=T)
+  
+  player1_win <- sum(roll1 >= roll2)
+  player2_win <- sum(roll1 <= roll2)
+  
+  if(player1_win>player2_win){player1}
+  else if (player1_win<player2_win){player2}
+  else{"draw"}
+}
+  game_15vs("Adam_G","John_N")
+
 
 
 ```
@@ -77,5 +193,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 # Your "cheating" function goes here
+game_15vs_rigged <- function(player1,player2){
+  
+  roll1 <- sample(1:6,15,replace=T, prob <-c(.1,.1,.1,.1,.1,.5))
+  roll2 <- sample(1:6,15,replace=T, prob <-c(.95,.1,.1,.1,.1,.1))
+  
+  player1_win <- sum(roll1 >= roll2)
+  player2_win <- sum(roll1 <= roll2)
+  
+  if(player1_win>player2_win){player1}
+  else if (player1_win<player2_win){player2}
+  else{"draw"}
+}
+  game_15vs("Adam_G","John_N")
 ```
 
